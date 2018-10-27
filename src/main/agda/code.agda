@@ -8,25 +8,25 @@ module code where
 
     open import Data.Nat
 
-    n_leafs : {A : Set} -> Tree A -> ℕ
-    n_leafs (leaf _) = 1
-    n_leafs (node l _ r) = n_leafs l + n_leafs r
+    n_leaves : {A : Set} -> Tree A -> ℕ
+    n_leaves (leaf _) = 1
+    n_leaves (node l _ r) = n_leaves l + n_leaves r
 
   module Leafs where
 
     open import Data.Vec
     open Trees
 
-    get : {A : Set} -> (s : Tree A) -> Vec A (n_leafs s)
+    get : {A : Set} -> (s : Tree A) -> Vec A (n_leaves s)
     get (leaf x) = x ∷ []
     get (node l _ r) = get l ++ get r
 
-    update : {A : Set} -> (s : Tree A) -> Vec A (n_leafs s) -> Tree A
+    update : {A : Set} -> (s : Tree A) -> Vec A (n_leaves s) -> Tree A
     update (leaf _) (x ∷ []) = leaf x
     update (node l x r) v = node updatedL x updatedR
       where
-        updatedL = update l (take (n_leafs l) v)
-        updatedR = update r (drop (n_leafs l) v)
+        updatedL = update l (take (n_leaves l) v)
+        updatedR = update r (drop (n_leaves l) v)
 
   module TestLeafs where
 

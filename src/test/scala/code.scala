@@ -40,8 +40,8 @@ class TheProblem extends FunSpec with Matchers{
     }
   }
 
-  val leafsInt = new Leafs[Int]
-  import leafsInt._
+  val leavesInt = new Leafs[Int]
+  import leavesInt._
 
   describe("test1"){
     val t: Tree[Int] = Node(Leaf(1), 2, Leaf(3))
@@ -160,27 +160,27 @@ class TheSolutionInScala extends FunSpec with Matchers{ self =>
     }
   }
 
-  val leafsInt = new Leafs[Int]
+  val leavesInt = new Leafs[Int]
 
   describe("Ok"){
 
     it("one focus"){
       val t = Leaf(1)
 
-      leafsInt.get(t) shouldBe
+      leavesInt.get(t) shouldBe
         Cons(1, Nil[Int]())
 
-      leafsInt.update(t).apply(Cons(3, Nil[Int]())) shouldBe
+      leavesInt.update(t).apply(Cons(3, Nil[Int]())) shouldBe
         Leaf(3)
     }
 
     it("two foci"){
       val t = Node(Node(Leaf(1), 2, Leaf(3)), 4, Leaf(5))
 
-      leafsInt.get(t) shouldBe
+      leavesInt.get(t) shouldBe
         Cons(1, Cons(3, Cons(5, Nil[Int]())))
 
-      leafsInt.update(t).apply(Cons(5, Cons(3, Cons(1, Nil[Int]())))) shouldBe
+      leavesInt.update(t).apply(Cons(5, Cons(3, Cons(1, Nil[Int]())))) shouldBe
         Node(Node(Leaf(5), 2, Leaf(3)), 4, Leaf(1))
     }
   }
@@ -191,13 +191,13 @@ class TheSolutionInScala extends FunSpec with Matchers{ self =>
 
     it("Not enough values"){
       """
-        leafsInt.update(t).apply(Cons(1, Cons(2, Nil[Int]())))
+        leavesInt.update(t).apply(Cons(1, Cons(2, Nil[Int]())))
       """ shouldNot compile
     }
 
     it("Exceeds values"){
       """
-        leafsInt.update(t).apply(Cons(5, Cons(4, Cons(3, Cons(2, Nil[Int]())))))
+        leavesInt.update(t).apply(Cons(5, Cons(4, Cons(3, Cons(2, Nil[Int]())))))
       """ shouldNot compile
     }
   }
@@ -264,27 +264,27 @@ class TheSolutionInScalaWithNat extends FunSpec with Matchers{
     }
   }
 
-  val leafsInt = new Leafs[Int]
+  val leavesInt = new Leafs[Int]
 
   describe("Ok"){
 
     it("one focus"){
       val t = Leaf(1)
 
-      leafsInt.get(t) shouldBe
+      leavesInt.get(t) shouldBe
         Sized(1)
 
-      leafsInt.put(t).apply(Sized[List](3)) shouldBe
+      leavesInt.put(t).apply(Sized[List](3)) shouldBe
         Leaf(3)
     }
 
     it("two foci"){
       val t = Node(Node(Leaf(1), 2, Leaf(3)), 4, Leaf(5))
 
-      leafsInt.get(t) shouldBe
+      leavesInt.get(t) shouldBe
         Sized(1, 3, 5)
 
-      leafsInt.put(t).apply(Sized[List](5, 3, 1)) shouldBe
+      leavesInt.put(t).apply(Sized[List](5, 3, 1)) shouldBe
         Node(Node(Leaf(5), 2, Leaf(3)), 4, Leaf(1))
     }
   }
@@ -295,13 +295,13 @@ class TheSolutionInScalaWithNat extends FunSpec with Matchers{
 
     it("Not enough values"){
       """
-        leafsInt.put(t).apply(Sized[List](1, 2))
+        leavesInt.put(t).apply(Sized[List](1, 2))
       """ shouldNot compile
     }
 
     it("Exceeds values"){
       """
-        leafsInt.put(t).apply(Sized[List](1, 2, 3, 4))
+        leavesInt.put(t).apply(Sized[List](1, 2, 3, 4))
       """ shouldNot compile
     }
   }
